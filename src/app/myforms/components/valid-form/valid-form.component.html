@@ -1,0 +1,16 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div formArrayName="orders" *ngFor="let order of ordersFormArray.controls; let i = index">
+    <label >
+      <input type="checkbox" [formControlName]="i">
+      {{ordersData[i].name}}
+    </label>
+  </div>
+
+  <div *ngIf="!form.valid">At least one order must be selected</div>
+  <br>
+  <button (click)="selectAll()">Check all</button>&nbsp;&nbsp;
+  <button [disabled]="!form.valid">submit</button>
+</form>
+
+<br><br>
+<p>Form value: {{ form.value | json }}</p>

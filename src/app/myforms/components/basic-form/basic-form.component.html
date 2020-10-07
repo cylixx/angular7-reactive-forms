@@ -1,0 +1,93 @@
+<div class="container">
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <label>
+    First Name:
+    <input type="text" formControlName="firstName" required>
+  </label>
+
+  <label>
+    Last Name:
+    <input type="text" formControlName="lastName">
+  </label>
+
+  <div formGroupName="address">
+    <h3>Address</h3>
+
+    <label>
+      Street:
+      <input type="text" formControlName="street">
+    </label>
+
+    <label>
+      City:
+      <input type="text" formControlName="city">
+    </label>
+    
+    <label>
+      State:
+      <input type="text" formControlName="state">
+    </label>
+
+    <label>
+      Zip Code:
+      <input type="text" formControlName="zip">
+    </label>
+  </div>
+
+  <div formGroupName="preferences">
+
+    <label for="mycolor">Favorite Color</label>
+    <select formControlName="mycolor" name="mycolor">
+      <option *ngFor="let mycolor of colours" [ngValue]="mycolor">
+        {{ mycolor.name }}
+      </option>
+    </select>
+    <br>
+    <!-- <label for="genres">Movie Genres</label>
+    <input type="checkbox" formControlName="movieGenres"> -->
+    <label class="field-label">Hobbies</label>
+      <div class="flex-container">
+        <!-- <div *ngFor="let hobby of myhobbies; let i=index;">
+          <input type="checkbox" formControlName="hobby">
+          {{myhobbies[i].name}}
+        </div> -->
+        <div *ngFor="let hobby of myhobbies" class="checkbox">
+          <input type="checkbox" formControlName="hobbies" [checked]="hobby.selected">
+          {{hobby.name}}
+        </div>
+      </div>
+
+  </div>
+
+  <div formArrayName="aliases">
+    <h3>Aliases</h3> <button (click)="addAlias()">Add Alias</button>
+
+    <div *ngFor="let alias of aliases.controls; let i=index">
+      <!-- The repeated alias template -->
+      <label>
+        Alias:
+        <input type="text" [formControlName]="i">
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>
+
+<hr>
+
+
+<p>
+  Form Value: {{ profileForm.value | json }}
+</p>
+
+
+<p>
+  Form Status: {{ profileForm.status }}
+</p>
+
+<p>
+  <button (click)="updateProfile()">Update Profile</button>
+</p>
+
+</div>

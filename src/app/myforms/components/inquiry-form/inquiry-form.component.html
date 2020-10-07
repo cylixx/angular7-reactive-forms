@@ -1,0 +1,13 @@
+<div *ngIf="isShowResponse">
+	<p>Inquiry Response</p>
+	<form [formGroup]="form" (ngSubmit)="submitSelectedCheckboxes()">
+		<ng-container formArrayName="receivedSummons" *ngFor="let summon of formReceivedSummons.controls; let i = index">
+			<ng-container [formGroupName]="i">
+				<input type="checkbox" formControlName="isChecked"> {{summon.value.name}}
+      </ng-container>
+    </ng-container>
+</form>
+<pre>{{form.value | json}}</pre>
+<button (click)="selectAll()">Select/Uncheck All</button>
+</div>
+

@@ -3,6 +3,7 @@
 // true y false para mapear y filtar el resultado final. 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-nested-form',
@@ -11,123 +12,79 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from "@ang
 })
 export class NestedFormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  personForm: FormGroup;
+  myhobbies = [];
 
-  myhobbies: any = [
-    {
-      name: "Sports",
-      value: "sports",
-      selected: true
-    },
-    {
-      name: "Music",
-      value: "music",
-      selected: false
-    },
-    {
-      name: "Movie",
-      value: "movie",
-      selected: true
-    },
-    {
-      name: "Reading",
-      value: "reading"
-    },
-    {
-      name: "Writing",
-      value: "writing"
-    }
-  ];
+  
 
-  personForm = this.fb.group({
-    // hobbies: this.fb.array( [ ], Validators.required )
-    hobbies: this.createHobbies2(this.myhobbies) 
-  });
-
-  ngOnInit() {
-    //this.createFormInputs();
+  getControls() {
+    return (this.personForm.get('hobbies') as FormArray).controls;
   }
 
-  onCheckChange(event: { target: { checked: any; value: any; }; }) {
-    const formArray: FormArray = this.personForm.get('hobbies') as FormArray;
-  
-    /* Selected */
-    if(event.target.checked){
-      // Add a new control in the arrayForm
-      formArray.push(new FormControl(event.target.value));
-    }
-    /* unselected */
-    else{
-      // find the unselected element
-      let i: number = 0;
-  
-      formArray.controls.forEach((ctrl: FormControl) => {
-        if(ctrl.value == event.target.value) {
-          // Remove the unselected element from the arrayForm
-          formArray.removeAt(i);
-          return;
-        }
-  
-        i++;
-      });
-    }
+  constructor(private fb: FormBuilder) { 
+  }
+
+  ngOnInit() {
+    this.personForm = this.fb.group({
+      // hobbies: this.fb.array( [], Validators.required )
+      hobbies: new FormArray([], Validators.required )
+      //hobbies: this.createHobbies2(this.myhobbies) 
+    });
+
+    of(this.getHobbies()).subscribe(result => {
+      this.myhobbies = result;
+      this.addCheckboxes();
+    });
+
+    // synchronous orders
+    // this.myhobbies = this.getHobbies();
+    // this.addCheckboxes();
+  }
+
+  private addCheckboxes() {
+    // this.myhobbies.forEach(() => this.personForm.get('hobbies')['controls'].push(new FormControl(false)));
+    this.myhobbies.forEach(() => this.getControls().push(new FormControl(false)));
+  }
+
+  getHobbies() {
+    return [
+      {
+        name: "Sports",
+        value: "sports"
+        //selected: true
+      },
+      {
+        name: "Music",
+        value: "music"
+        //selected: false
+      },
+      {
+        name: "Movie",
+        value: "movie"
+        //selected: true
+      },
+      {
+        name: "Reading",
+        value: "reading"
+      },
+      {
+        name: "Writing",
+        value: "writing"
+      }
+    ];
   }
 
   onSubmit() {
-    console.warn(this.personForm.value);
-  }
-
-  createHobbies2(hobbiesInputs: any[]) {
-    function isChecked(element: { selected: any; }, index: any, array: any) { 
-      return (element.selected); 
-    } 
-    var arr = hobbiesInputs.filter(isChecked).map(hobby => {
-      return this.fb.control(hobby.value); //FormControl
-    });
-    return this.fb.array(arr, Validators.required);  // FormArray, optional: Validators.required
-  }
+    const selectedOrderIds = this.personForm.value.hobbies
+      .map((checked, i) => checked ? this.myhobbies[i].id : null)
+      .filter(v => v !== null);
+    console.log(selectedOrderIds);
+  } 
   
   selectAll(){
     this.personForm.controls.hobbies["controls"].map(control=>{
       control.setValue(true);
     });
   }
-
-  //----------
-
-  createFormInputs() {
-    this.personForm = new FormGroup({
-      hobbies: this.createHobbies(this.myhobbies)
-    });
-    // this.getSelectedHobbies();
-  }
-
-  createHobbies(hobbiesInputs: any[]) {
-    const arr = hobbiesInputs.map((hobby: { selected: any; }) => {
-      return new FormControl(hobby.selected || false);
-    });
-    return new FormArray(arr);
-  }
-
-  // getSelectedHobbies() {
-  //   this.selectedHobbiesNames = _.map(
-  //     this.personForm.controls.hobbies["controls"],
-  //     (hobby, i) => { 
-  //       return hobby.value && this.myhobbies[i].value;
-  //     }
-  //   );
-  //   this.getSelectedHobbiesName();
-  // }
-
-  // getSelectedHobbiesName() {
-  //   this.selectedHobbiesNames = _.filter(
-  //     this.selectedHobbiesNames,
-  //     function(hobby) {
-  //       if (hobby !== false) {
-  //         return hobby;
-  //       }
-  //     }
-  //   );
-  // }
-
+  
 }

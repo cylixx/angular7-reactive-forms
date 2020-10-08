@@ -6,6 +6,8 @@
 				<input type="checkbox" formControlName="isChecked"> {{summon.value.name}}
       </ng-container>
     </ng-container>
+
+    <button type="submit" [disabled]="!form.valid">Submit</button>
 </form>
 <pre>{{form.value | json}}</pre>
 <button (click)="selectAll()">Select/Uncheck All</button>

@@ -11,11 +11,11 @@ import { FormArray } from '@angular/forms';  // FormArray is an alternative to F
 export class BasicFormComponent implements OnInit {
 
   colours = [
-    {name: 'White', abbrev: 'WTH'},
-    {name: 'Black', abbrev: 'BLK'},
-    {name: 'Red', abbrev: 'RED'},
-    {name: 'Blue', abbrev: 'BLE'},
-    {name: 'Green', abbrev: 'GRE'},
+    {name: 'White', id: '01'},
+    {name: 'Black', id: '02'},
+    {name: 'Red', id: '03'},
+    {name: 'Blue', id: '04'},
+    {name: 'Green', id: '05'},
   ];
 
   // genres = [
@@ -61,11 +61,12 @@ export class BasicFormComponent implements OnInit {
       zip: ['']
     }),
     preferences: this.fb.group({  // a nested group
-      mycolor: [ this.colours[3] ],
+      mycolor: [ this.colours[3] ]
       // movieGenres: [ this.genres[1] ]
       //hobbies: this.createHobbies(this.myhobbies)
-      hobbies: [ this.myhobbies ]
+      // hobbies: [ this.myhobbies ]
     }),
+    terms: [false, Validators.required],
     aliases: this.fb.array([
       this.fb.control('')
     ])

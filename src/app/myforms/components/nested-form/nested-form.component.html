@@ -1,38 +1,13 @@
 <div class="container">
-  <!-- <form [formGroup]="personForm" (ngSubmit)="onSubmit()" class="form"> 
-    <div>
-      <label class="field-label">Hobbies</label>
-      <div class="flex-container">
-        <div *ngFor="let hobby of personForm.controls.hobbies.controls; let i=index;">
-          <input type="checkbox" [formControl]="hobby">
-          {{myhobbies[i].name}}
-        </div>
-      </div>
-    </div>
-  </form>
-
-  <div class="element">
-  <label class="field-label">Selected Hobbies:</label>
-  <div class="flex-container">
-    <label *ngFor="let hobby of personForm.controls.hobbies.controls;">
-      {{hobby.name}}
-    </label>
-  </div>
-</div>  -->
-
-<!-- <form [formGroup]="personForm">
-  <input *ngFor="let control of personForm.controls['hobbies'].controls"
-  type="checkbox" id="checkbox-1" value="value-1" [formControl]="control" />     
-</form> -->
-
+  
 <form [formGroup]="personForm" (ngSubmit)="onSubmit()" >
-  <div *ngFor="let choice of myhobbies; let i=index" class="col-md-2">
+  <div formArrayName="hobbies" *ngFor="let choice of getControls(); let i = index" class="col-md-2">
     <label>
-      <input type="checkbox" [value]="choice.value" [checked]="choice.selected" (change)="onCheckChange($event)">
-      {{choice.name}}
+      <!-- <input type="checkbox" [value]="choice.value" [checked]="choice.selected" (change)="onCheckChange($event)"> -->
+      <input type="checkbox" [formControlName]="i">
+      {{myhobbies[i].name}}
     </label>
   </div>
-
   
   <p>
     <button (click)="selectAll()">Select All</button> &nbsp;&nbsp;

@@ -9,7 +9,7 @@
   <div *ngIf="!form.valid">At least one order must be selected</div>
   <br>
   <button (click)="selectAll()">Check all</button>&nbsp;&nbsp;
-  <button [disabled]="!form.valid">submit</button>
+  <button type="submit" [disabled]="!form.valid">submit</button>
 </form>
 
 <br><br>

@@ -43,21 +43,11 @@
       </option>
     </select>
     <br>
-    <!-- <label for="genres">Movie Genres</label>
-    <input type="checkbox" formControlName="movieGenres"> -->
-    <label class="field-label">Hobbies</label>
-      <div class="flex-container">
-        <!-- <div *ngFor="let hobby of myhobbies; let i=index;">
-          <input type="checkbox" formControlName="hobby">
-          {{myhobbies[i].name}}
-        </div> -->
-        <div *ngFor="let hobby of myhobbies" class="checkbox">
-          <input type="checkbox" formControlName="hobbies" [checked]="hobby.selected">
-          {{hobby.name}}
-        </div>
-      </div>
-
+    
   </div>
+
+  <label for="terms">Accept terms</label>: 
+  <input type="checkbox" formControlName="terms" id="terms" required>
 
   <div formArrayName="aliases">
     <h3>Aliases</h3> <button (click)="addAlias()">Add Alias</button>

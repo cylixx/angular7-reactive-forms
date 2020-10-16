@@ -83,7 +83,7 @@ export class BasicFormComponent implements OnInit {
 
   updateProfile() {
     this.profileForm.patchValue({ //Use the patchValue() method to replace any properties defined in the object that have changed in the form model.
-      firstName: 'Nancy',
+      firstName: 'cylixx',
       address: {
         street: '123 Drew Street'
       }

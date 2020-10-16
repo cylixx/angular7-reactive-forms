@@ -8,6 +8,7 @@ import { ValidFormComponent } from './components/valid-form/valid-form.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleFormComponent } from './components/simple-form/simple-form.component';
 import { InquiryFormComponent } from './components/inquiry-form/inquiry-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 @NgModule({
   declarations: [ 
@@ -17,7 +18,8 @@ import { InquiryFormComponent } from './components/inquiry-form/inquiry-form.com
     SubmitFormComponent,
     ValidFormComponent,
     SimpleFormComponent,
-    InquiryFormComponent
+    InquiryFormComponent,
+    RegisterFormComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { InquiryFormComponent } from './components/inquiry-form/inquiry-form.com
     SubmitFormComponent,
     ValidFormComponent,
     SimpleFormComponent,
-    InquiryFormComponent
+    InquiryFormComponent,
+    RegisterFormComponent
   ]
 })
 export class MyFormsModule { }

@@ -16,7 +16,7 @@ export class SimpleFormComponent implements OnInit {
   }
 
   updateName() {
-    this.name.setValue('Selene'); //Use the setValue() method to set a new value for an individual control. 
+    this.name.setValue('cylixx'); //Use the setValue() method to set a new value for an individual control. 
   }
 
 }

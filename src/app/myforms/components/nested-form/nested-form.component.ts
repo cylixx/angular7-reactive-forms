@@ -1,4 +1,4 @@
-// falta componer, porque cuando elijo uno estoyn planchando los valores y 
+// falta componer, porque cuando elijo uno estoy planchando los valores y 
 // mas bien cuando envio el formulario debo vasarme en ese arreglo de valores 
 // true y false para mapear y filtar el resultado final. 
 import { Component, OnInit } from '@angular/core';
@@ -14,8 +14,6 @@ export class NestedFormComponent implements OnInit {
 
   personForm: FormGroup;
   myhobbies = [];
-
-  
 
   getControls() {
     return (this.personForm.get('hobbies') as FormArray).controls;

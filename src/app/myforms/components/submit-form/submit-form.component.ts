@@ -1,5 +1,7 @@
+// https://jasonwatmore.com/post/2020/04/19/angular-9-reactive-forms-validation-example
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MustMatch } from 'src/app/utils/must-match.validators';
 
 @Component({
   selector: 'app-submit-form',
@@ -8,53 +10,42 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SubmitFormComponent implements OnInit {
 
-  // chapters: any = [
-  //   {
-  //     name: "Chapter 1",
-  //     value: "chapter1",
-  //     selected: true
-  //   },
-  //   {
-  //     name: "Chapter 2",
-  //     value: "chapter2",
-  //     selected: false
-  //   },
-  //   {
-  //     name: "Chapter 3",
-  //     value: "chapter3",
-  //     selected: true
-  //   },
-  //   {
-  //     name: "Chapter 4",
-  //     value: "chapter4"
-  //   },
-  //   {
-  //     name: "Chapter 5",
-  //     value: "chapter5"
-  //   }
-  // ];
+  registerForm: FormGroup;
+  submitted = false;
 
-  // groupForm = this.fb.group({
-  //   // hobbies: this.fb.array( [ ], Validators.required )
-  //   groupChapters: this.buildChapters()
-  // });
-
-  constructor(private fb: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+      this.registerForm = this.formBuilder.group({
+          title: ['', Validators.required],
+          firstName: ['', Validators.required],
+          lastName: ['', Validators.required],
+          email: ['', [Validators.required, Validators.email]],
+          password: ['', [Validators.required, Validators.minLength(6)]],
+          confirmPassword: ['', Validators.required],
+          acceptTerms: [false, Validators.requiredTrue]
+      }, {
+          validator: MustMatch('password', 'confirmPassword')
+      });
   }
 
-  // private buildChapters() {
-  //   const chapters = this.chapters.map(chapter => {
-  //     return this.fb.control(chapter.selected)
-  //   });
-  //   return this.fb.array(chapters);
-  // }
+  // convenience getter for easy access to form fields
+  get f() { return this.registerForm.controls; }
 
-  // markAll() {
-  //   this.groupForm.controls['groupChapters'].setValue(
-  //       this.groupForm.controls['groupChapters'].value.map(value => true)
-  //   );
-  // }
+  onSubmit() {
+      this.submitted = true;
 
+      // stop here if form is invalid
+      if (this.registerForm.invalid) {
+          return;
+      }
+
+      // display form values on success
+      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+  }
+
+  onReset() {
+      this.submitted = false;
+      this.registerForm.reset();
+  }
 }
